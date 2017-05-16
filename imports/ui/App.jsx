@@ -5,12 +5,21 @@ import { createContainer} from "meteor/react-meteor-data"
 
 import TweetsResults from "./TweetsResults.jsx";
 import ColombiaMap from "./ColombiaMap.jsx";
+import Overlay from "./Overlay.jsx";
 import {Tweets} from "../api/Tweets.js";
 
 export class App extends Component {
   constructor(props) {
     super(props);
+    this.projection = null;
+  }
 
+  setProjection(proj) {
+    this.projection = proj;
+  }
+
+  getProjection() {
+    return this.projection;
   }
 
   changeQuery(evt) {
@@ -25,7 +34,6 @@ export class App extends Component {
 
   }
 
-
   render() {
     console.log("render!");
     return (
@@ -37,6 +45,7 @@ export class App extends Component {
         }
         <h2>Results:</h2>
         <ColombiaMap width="300" height="300" setProjection={() => this.setProjection}/>
+        <Overlay getProjection = {() => this.getProjection} />
         {this.props && this.props.tweets ?
           <TweetsResults tweets={this.props.tweets} /> :
           <p>Enter a query</p>

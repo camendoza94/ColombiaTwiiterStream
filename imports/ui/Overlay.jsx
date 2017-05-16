@@ -6,6 +6,10 @@ export default class Overlay extends Component {
 		this.canvas = null;
 	}
 
+	componentWillUpdate(nextProps) {
+		
+	}
+
 	render() {
 		return(
 			<canvas ref = {(canvas) => {this.canvas = canvas}} />
