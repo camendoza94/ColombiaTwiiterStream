@@ -4,6 +4,7 @@ import { Meteor } from "meteor/meteor";
 import { createContainer} from "meteor/react-meteor-data"
 
 import TweetsResults from "./TweetsResults.jsx";
+import ColombiaMap from "./ColombiaMap.jsx";
 import {Tweets} from "../api/Tweets.js";
 
 export class App extends Component {
@@ -29,14 +30,15 @@ export class App extends Component {
     console.log("render!");
     return (
       <div>
-        <input type="text" onKeyPress={this.changeQuery.bind(this)} placeholder="Query"/>
+      {this.changeQuery("")}
         { this.props && this.props.err ?
           <div>Error: {this.props.err}</div> :
           <span></span>
         }
         <h2>Results:</h2>
+        <ColombiaMap width="300" height="300" setProjection={() => this.setProjection}/>
         {this.props && this.props.tweets ?
-          <TweetsResults tweets={this.props.tweets}/> :
+          <TweetsResults tweets={this.props.tweets} /> :
           <p>Enter a query</p>
         }
 
