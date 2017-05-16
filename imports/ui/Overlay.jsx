@@ -6,15 +6,16 @@ export default class Overlay extends Component {
 		this.canvas = null;
 	}
 
-	componentWillUpdate(nextProps) {
+	componentWillUpdate() {
 		let ctx = this.canvas.getContext('2d');
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		this.props.tweets.map((tweet) => {
 			coord = tweet.coordinates.coordinates;
-			pos = this.props.getProjetion(coord);
-			ctx.fillStyle = 'yellow';
+			console.log(coord);
+			pos = this.props.getProjection()(coord);
+			ctx.fillStyle = 'green';
 			ctx.beginPath();
-			ctx.arc(pos[0], pos[1], 5, 0, 2*Math.PI);
+			ctx.arc(pos[0], pos[1], 3, 0, 2*Math.PI);
 			ctx.fill()
 		});
 
@@ -22,7 +23,7 @@ export default class Overlay extends Component {
 
 	render() {
 		return(
-			<canvas ref={(canvas) => {this.canvas = canvas}} width="600" height="600"/>
+			<canvas ref={(canvas) => {this.canvas = canvas}} width="600" height="600"></canvas>
 		);
 	}
 }

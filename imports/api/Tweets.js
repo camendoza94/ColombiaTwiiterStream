@@ -29,17 +29,15 @@ if (Meteor.isServer) {
         access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
         access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
       });
-      console.log(client);
       if (stream) {
         console.log("Stopping previous stream");
         stream.destroy();
         // Remove all the tweets
         Tweets.remove({});
       }
-
-      stream = client.stream("statuses/filter", {track: query});
+      let locations = "-79.12,-4.23,-66.85,12.59";
+      stream = client.stream("statuses/filter", {track: query, locations:locations})
       stream.on("data", Meteor.bindEnvironment(function(tweet) {
-        // console.log(tweet.text);
         // resolve(tweet);
         if(tweet.coordinates) {
           Tweets.insert(tweet);

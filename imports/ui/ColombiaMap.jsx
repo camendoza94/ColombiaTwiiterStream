@@ -31,6 +31,8 @@ export default class ColombiaMap extends Component {
 		  .center([-74, 4.5])
 		  .translate([width / 2, height / 2]);
 
+		this.props.setProjection(this.projection);
+
 		var path = d3.geo.path()
 		  .projection(this.projection);
 
@@ -258,7 +260,6 @@ export default class ColombiaMap extends Component {
 		      return 0.1 + Math.random()*0.4;
 		    });
 		}
-		this.props.setProjection(this.projection);
 	}
 
 	render() {

@@ -1,1 +1,10 @@
 /* CSS declarations go here */
+canvas {
+	position: relative;
+	z-index: 2;
+}
+
+.colombiaMap {
+	position: absolute;
+    top: 0;
+}
