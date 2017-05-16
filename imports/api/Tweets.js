@@ -14,13 +14,13 @@ export const Tweets = new Mongo.Collection("tweets");
 // Twitter streamer should run only on the server
 if (Meteor.isServer) {
   Meteor.publish("tweets", function tweetsPublication() {
-    return Tweets.find({}, {sort: {created_at: -1}, limit:10});
+    return Tweets.find({}, {sort: {created_at: -1}});
   });
 
   // This method will trigger the streamer
   Meteor.methods({
     "twitter.stream"(query) {
-      console.log("Twitter search" + query);
+      console.log("Twitter search: " + query);
 
       // Create the Twitter object
       let client = new Twitter({
@@ -29,7 +29,7 @@ if (Meteor.isServer) {
         access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
         access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
       });
-
+      console.log(client);
       if (stream) {
         console.log("Stopping previous stream");
         stream.destroy();

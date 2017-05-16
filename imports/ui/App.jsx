@@ -22,32 +22,26 @@ export class App extends Component {
     return this.projection;
   }
 
-  changeQuery(evt) {
-    if (evt.key !== "Enter") {
-      return;
-    }
-    // "this" will change in the method call, so I need to save it
-    let component = this;
-
-    console.log(evt.target.value);
-    Meteor.call("twitter.stream", evt.target.value);
-
+  changeQuery(query) {
+    console.log(query);
+    Meteor.call("twitter.stream", query);
   }
 
   render() {
-    console.log("render!");
     return (
       <div>
-      {this.changeQuery("")}
+      {this.changeQuery("Colombia")}
         { this.props && this.props.err ?
           <div>Error: {this.props.err}</div> :
           <span></span>
         }
-        <h2>Results:</h2>
-        <ColombiaMap width="300" height="300" setProjection={() => this.setProjection}/>
-        <Overlay getProjection = {() => this.getProjection} />
-        {this.props && this.props.tweets ?
-          <TweetsResults tweets={this.props.tweets} /> :
+        <h2>Colombia in tweets:</h2>
+        {this.props && this.props.tweets ?     
+          <div>
+              <ColombiaMap width="600" height="600" data={{RISARALDA:10, CALDAS:12}} setProjection={() => this.setProjection} />
+              <Overlay tweets={this.props.tweets} getProjection={() => this.getProjection} />
+              <TweetsResults tweets={this.props.tweets} />
+          </div> :
           <p>Enter a query</p>
         }
 
